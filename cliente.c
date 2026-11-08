@@ -1,4 +1,3 @@
-
 #include "comum.h"
 #include <string.h>
 #include <arpa/inet.h>
