@@ -28,13 +28,14 @@ int criar_socket_tcp() {
     return socketfd;
 }
 /*
-    funcao geral do servidor
+    funcao geral do servidor.
+    - associar o servidor a um endereco e porta especifico (bind)
+    - esperar pelas conexoes dos clientes (listen)
 */
 int configurar_servidor(){
     int servidor_fd = criar_socket_tcp();
 
     struct sockaddr_in endereco;
-    socklen_t tamanho = sizeof(endereco);
     endereco.sin_family = AF_INET;
     endereco.sin_addr.s_addr = INADDR_ANY; 
     endereco.sin_port = htons(PORTA);
@@ -53,7 +54,10 @@ int configurar_servidor(){
 
     return servidor_fd;
 }
-
+/*
+    funcao geral do cliente
+    - tenta conectar ao servidor
+*/
 int configurar_cliente(const char *ip, uint16_t porta){
     int cliente_fd = criar_socket_tcp();
     printf("Socket criado: %d\n", cliente_fd);
@@ -81,6 +85,7 @@ int configurar_cliente(const char *ip, uint16_t porta){
 
     return cliente_fd;
 }
+// pra multiplos clientes
 int aceitar_cliente(int servidor_fd) {
     int conexao_fd = accept(servidor_fd, NULL, NULL);
 
