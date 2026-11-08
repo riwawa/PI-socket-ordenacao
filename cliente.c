@@ -27,8 +27,7 @@ int main(void) {
             return EXIT_FAILURE;
         }
 
-        if (strcmp(mensagem, "sair\n") == 0 ||
-            strcmp(mensagem, "sair") == 0) {
+        if (strcmp(mensagem, "sair\n") == 0 || strcmp(mensagem, "sair") == 0) {
             printf("Encerrando cliente...\n");
             break;
         }
@@ -41,12 +40,7 @@ int main(void) {
         size_t enviado = 0;
 
         while (enviado < total) {
-            ssize_t n = send(
-                cliente_fd,
-                mensagem + enviado,
-                total - enviado,
-                0
-            );
+            ssize_t n = send(cliente_fd, mensagem + enviado, total - enviado, 0);
 
             if (n <= 0) {
                 if (n < 0) {
@@ -67,12 +61,7 @@ int main(void) {
         // receber resposta do servidor
         char strData[255] = {0};
 
-        ssize_t recebidos = recv(
-            cliente_fd,
-            strData,
-            sizeof(strData) - 1,
-            0
-        );
+        ssize_t recebidos = recv(cliente_fd, strData, sizeof(strData) - 1, 0);
 
         if (recebidos < 0) {
             perror("Erro no recv");
