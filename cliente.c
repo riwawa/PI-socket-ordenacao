@@ -14,10 +14,12 @@ int main(void) {
 
     ip[strcspn(ip, "\n")] = '\0';
 
+    printf ("====================");
+
     while (1) {
         // ler entrada do usuário
         char mensagem[80] = {0};
-        printf("\nDigite os numeros separados por espaco (ou 'sair'): ");
+        printf("\nDigite os numeros separados por espaco (ou 'sair'):\n> ");
 
         if (fgets(mensagem, sizeof(mensagem), stdin) == NULL) {
             if (feof(stdin)) {
@@ -28,13 +30,13 @@ int main(void) {
         }
 
         if (strcmp(mensagem, "sair\n") == 0 || strcmp(mensagem, "sair") == 0) {
-            printf("Encerrando cliente...\n");
+            printf("--- Encerrando cliente...\n");
             break;
         }
 
         //conectar ao servidor e enviar msg
         int cliente_fd = configurar_cliente(ip, PORTA);
-        printf("Conexao estabelecida! FD: %d\n", cliente_fd);
+        //printf("Conexao estabelecida! FD: %d\n", cliente_fd);
 
         size_t total = strlen(mensagem);
         size_t enviado = 0;
@@ -56,7 +58,7 @@ int main(void) {
             enviado += (size_t)n;
         }
 
-        printf("Bytes enviados: %zu\n", enviado);
+        //printf("Bytes enviados: %zu\n", enviado);
 
         // receber resposta do servidor
         char strData[255] = {0};
@@ -71,7 +73,7 @@ int main(void) {
             printf("Servidor encerrou a conexao sem resposta.\n");
         } else {
             strData[recebidos] = '\0';
-            printf("Mensagem recebida: %s\n", strData);
+            printf("=> NUMEROS ORDENADOS: %s\n", strData);
         }
         close(cliente_fd);
     }

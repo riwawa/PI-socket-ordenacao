@@ -60,21 +60,21 @@ int configurar_servidor(){
 */
 int configurar_cliente(const char *ip, uint16_t porta){
     int cliente_fd = criar_socket_tcp();
-    printf("Socket criado: %d\n", cliente_fd);
+    //printf("Socket criado: %d\n", cliente_fd);
     struct sockaddr_in endereco = {0};
 
     endereco.sin_family = AF_INET;
     endereco.sin_port = htons(porta);
 
     int resultado = inet_pton(AF_INET, ip, &endereco.sin_addr);
-    printf("Retorno do inet_pton: %d\n", resultado);
+    //printf("Retorno do inet_pton: %d\n", resultado);
 
     if (resultado != 1) {
         fprintf(stderr, "IP inválido ou erro na conversão\n");
         close(cliente_fd);
         exit(EXIT_FAILURE);
     }
-    printf("Tentando conectar...\n");
+    printf("ORDENANDO...\n");
 
     if (connect(cliente_fd, (struct sockaddr *)&endereco, sizeof(endereco))<0){
         perror("ERRO AO CONECTAR.");
